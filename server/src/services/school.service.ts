@@ -22,8 +22,14 @@ const updatePassword = async (id: string, hashedPassword: string) => {
   );
 };
 
+// Get a list of all schools
+const getAllSchools = async () => {
+  return await School.find().sort({ schoolName: 1 });
+};
+
 export default {
   getSchoolByNameWithPassword,
   getSchoolById,
   updatePassword,
+  getAllSchools,
 };
