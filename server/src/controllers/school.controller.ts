@@ -122,7 +122,18 @@ const setupNewPassword = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * Logout School
+ * @route POST /auth/logout
+ */
+const logoutSchool = async (req: Request, res: Response) => {
+  res.status(200).json({
+    message: 'Logged out successfully.',
+  });
+};
+
 export default {
   loginSchool,
   setupNewPassword,
+  logoutSchool,
 };
