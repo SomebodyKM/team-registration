@@ -42,6 +42,7 @@ const loginSchool = async (req: Request, res: Response) => {
       message: 'Login successfully',
       token,
       school: {
+        _id: school._id,
         schoolName: school.schoolName,
         isFirstLogin: school.isFirstLogin,
       },
@@ -110,6 +111,7 @@ const setupNewPassword = async (req: AuthRequest, res: Response) => {
     res.status(200).json({
       message: 'Password updated successfully. You may now access the system',
       school: {
+        _id: school._id,
         schoolName: updatedSchool?.schoolName,
         isFirstLogin: updatedSchool?.isFirstLogin,
       },
@@ -132,8 +134,31 @@ const logoutSchool = async (req: Request, res: Response) => {
   });
 };
 
+/**
+ * Get All Schools (For Login Dropdown)
+ * @route GET /auth/schools
+ */
+const getAllSchools = async (req: Request, res: Response) => {
+  try {
+    const schools = await schoolService.getAllSchools();
+
+    const formattedSchools = schools.map((school) => ({
+      _id: school._id,
+      schoolName: school.schoolName,
+    }));
+
+    res.status(200).json(formattedSchools);
+  } catch (err) {
+    console.error('Get All Schools Error:', err);
+    res.status(500).json({
+      message: 'Server error fetching school list.',
+    });
+  }
+};
+
 export default {
   loginSchool,
   setupNewPassword,
   logoutSchool,
+  getAllSchools,
 };
