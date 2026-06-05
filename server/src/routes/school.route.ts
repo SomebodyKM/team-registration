@@ -6,5 +6,6 @@ const schoolRouter = Router();
 
 schoolRouter.post('/login', schoolController.loginSchool);
 schoolRouter.post('/setup-password', protect, schoolController.setupNewPassword);
+schoolRouter.post('/logout', protect, schoolController.logoutSchool);
 
 export default schoolRouter;
