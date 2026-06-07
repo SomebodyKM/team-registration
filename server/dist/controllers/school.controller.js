@@ -46,6 +46,7 @@ const loginSchool = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             message: 'Login successfully',
             token,
             school: {
+                _id: school._id,
                 schoolName: school.schoolName,
                 isFirstLogin: school.isFirstLogin,
             },
@@ -103,6 +104,7 @@ const setupNewPassword = (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.status(200).json({
             message: 'Password updated successfully. You may now access the system',
             school: {
+                _id: school._id,
                 schoolName: updatedSchool === null || updatedSchool === void 0 ? void 0 : updatedSchool.schoolName,
                 isFirstLogin: updatedSchool === null || updatedSchool === void 0 ? void 0 : updatedSchool.isFirstLogin,
             },
@@ -115,7 +117,38 @@ const setupNewPassword = (req, res) => __awaiter(void 0, void 0, void 0, functio
         });
     }
 });
+/**
+ * Logout School
+ * @route POST /auth/logout
+ */
+const logoutSchool = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.status(200).json({
+        message: 'Logged out successfully.',
+    });
+});
+/**
+ * Get All Schools (For Login Dropdown)
+ * @route GET /auth/schools
+ */
+const getAllSchools = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const schools = yield school_service_1.default.getAllSchools();
+        const formattedSchools = schools.map((school) => ({
+            _id: school._id,
+            schoolName: school.schoolName,
+        }));
+        res.status(200).json(formattedSchools);
+    }
+    catch (err) {
+        console.error('Get All Schools Error:', err);
+        res.status(500).json({
+            message: 'Server error fetching school list.',
+        });
+    }
+});
 exports.default = {
     loginSchool,
     setupNewPassword,
+    logoutSchool,
+    getAllSchools,
 };
