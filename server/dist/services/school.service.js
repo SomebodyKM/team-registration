@@ -25,8 +25,13 @@ const updatePassword = (id, hashedPassword) => __awaiter(void 0, void 0, void 0,
         isFirstLogin: false,
     }, { new: true, runValidators: true });
 });
+// Get a list of all schools
+const getAllSchools = () => __awaiter(void 0, void 0, void 0, function* () {
+    return yield school_model_1.School.find().sort({ schoolName: 1 });
+});
 exports.default = {
     getSchoolByNameWithPassword,
     getSchoolById,
     updatePassword,
+    getAllSchools,
 };
